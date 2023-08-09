@@ -1,4 +1,15 @@
 $(function() {
+    function setModalTimer() {
+      let index = 10;
+      console.log($('.modal__timer'));
+      if(!$('.modal__timer').length) return;
+      setInterval(function() {
+          $('.modal__timer').html(index--);
+          if (!index) {
+              window.location = 'https://gesbes.com';
+          }
+      }, 1000);
+  }
 
   function addLogoutLink() {
     $('.logout').remove();
@@ -6,13 +17,15 @@ $(function() {
   }
 
 
-  function handlSuccessResult(){
+  function handlSuccessResult(email){
     const successMessage = '<div class="success-message">Success</div>'
       $('.auth-form').append(successMessage);
       setTimeout(function() {
-        $('.success-message').remove()
+        $('.modal-bg').remove();
+        $('.auth').before('<div class="modal-bg"><p class="modal-message">Вы зарегестрировались через почту ' + email + '</p></div>');
       }, 3000);
       addLogoutLink();
+      setModalTimer();
   }
 
   function handlErrorResult(){
@@ -23,11 +36,12 @@ $(function() {
       }, 3000);
   }
 
-  function checkAuth(formId) {
+
+  function checkEmailAuth(formId) {
     var msg = $('#' + formId).serialize();
     $.ajax({
         type: 'POST',
-        url: '/auth.php',
+        url: '/email_login.php',
         data: msg,
         beforeSend: function() {
             $('.auth-form').append('<img class="loading-image" src="img/loading.gif"/>');
@@ -35,8 +49,8 @@ $(function() {
         success: function (data) {
           $('.loading-image').remove();
             const result = JSON.parse(data);
-            if (result.result == 'success'){
-                handlSuccessResult()
+            if (result.result != 'error'){
+                handlSuccessResult(result.result);
             } else {
                 handlErrorResult();
             }
@@ -47,14 +61,33 @@ $(function() {
     });
   }
 
+
+  // function checkVkAuth() {
+
+  //   window.location = '/vk_login.php';
+  // }
+
+
   function addFormEvents(formId) {
       $('#' + formId).submit(function(e){
           e.preventDefault();
-          checkAuth(formId);
+
+          const trigger = $(e.originalEvent.submitter);
+          if (trigger.hasClass('auth-form__submit')) {
+            checkEmailAuth(formId);
+          }
+          // } else if (trigger.hasClass('auth-form__vk-button')) {
+          //   checkVkAuth();
+          // }
+          
       });
   }
 
   addFormEvents('auth-form');
 
+  setModalTimer();
+
+
+  
 
 });

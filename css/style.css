@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+img {
+  max-width: 100%;
+}
+
 .auth {
   margin: 50px auto;
   max-width: 500px;
@@ -32,6 +36,12 @@
   margin-bottom: 10px;
 }
 
+.auth-form__submits {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .auth-form__submit {
   border: none;
   border-radius: 27px;
@@ -46,6 +56,13 @@
 
 .auth-form__submit:hover {
   transform: scale(1.1);
+}
+
+.auth-form__social {
+  max-width: 25px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .success-message {
@@ -84,3 +101,18 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+.modal-bg {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid #e8e8e8;
+  background: #f0f0f0;
+  height: 300px;
+  z-index: 2;
+  padding: 25px;
+  font-family: sans-serif;
+    
+}
+
