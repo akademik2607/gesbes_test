@@ -22,10 +22,12 @@ $(function() {
       $('.auth-form').append(successMessage);
       setTimeout(function() {
         $('.modal-bg').remove();
-        $('.auth').before('<div class="modal-bg"><p class="modal-message">Вы зарегестрировались через почту ' + email + '</p></div>');
+        $('.auth').before('<div class="modal-bg"><p class="modal-message">Вы зарегестрировались через почту ' + email + '</p> <p> Вы будете перенаправленны на gesbes.com через: <span class="modal__timer"></span></p></div>');
+        setTimeout(setModalTimer, 1000);
+        
       }, 3000);
       addLogoutLink();
-      setModalTimer();
+
   }
 
   function handlErrorResult(){

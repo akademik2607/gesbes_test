@@ -18,7 +18,7 @@ if (isset($_GET['code'])) {
     $token = json_decode(file_get_contents('https://oauth.vk.com/access_token' . '?' . urldecode(http_build_query($params))), true);
 }
 
-if(isset($token['email']) {
+if(isset($token['email'])) {
     $_SESSION['auth'] = true;
 }
 
