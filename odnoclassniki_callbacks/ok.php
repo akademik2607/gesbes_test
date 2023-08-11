@@ -26,7 +26,7 @@ $tokenInfo;
 
 
 if (isset($tokenInfo['access_token']) && isset($ok_public_key)) {
-    var_dump($tokenInfo);
+    
     $sign = md5("application_key={$ok_public_key}format=jsonmethod=users.getCurrentUser" . md5("{$tokenInfo['access_token']}{$ok_client_secret}"));
     $params = array(
       'method'          => 'users.getCurrentUser',
@@ -36,7 +36,7 @@ if (isset($tokenInfo['access_token']) && isset($ok_public_key)) {
       'sig'             => $sign 
     );
     $userInfo = json_decode(file_get_contents('https://api.odnoklassniki.ru/fb.do' . '?' . urldecode(http_build_query($params))), true);
-    var_dump($userInfo);
+    
 }
 
 if($userInfo) {
